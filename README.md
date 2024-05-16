@@ -18,6 +18,9 @@ This project is a GeoData Management System built using Next.js, Prisma, and Pos
 - **Tailwind CSS**: Utility-first CSS framework for rapidly building custom designs.
 - **React-Leaflet**: For interactive mapping and geo-data visualization.
 
+## Live Demo
+Check out the live demo of this project deployed on Heroku: [GeoData Management System](https://geodata-management-0af4c1d88e41.herokuapp.com/)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -76,6 +79,39 @@ A step-by-step series of examples that tell you how to get a development environ
     ```
     Navigate to http://localhost:3000 to view the app.
 
+### Deploying to Heroku
+To deploy this project to Heroku, follow these steps:
+
+1. **Install the Heroku CLI**: If you haven't already, install the Heroku CLI from [here](https://devcenter.heroku.com/articles/heroku-cli).
+
+2. **Log in to your Heroku account**:
+    ```bash
+    heroku login
+    ```
+3. **Create a new Heroku application**:
+    ```bash
+    heroku create geodata-management
+    ```
+4. **Add PostgreSQL add-on**:
+    ```bash
+    heroku addons:create heroku-postgresql:hobby-dev
+    ```
+5. **Set up environment variables**:
+    ```bash
+    heroku config:set JWT_SECRET="your_secret_key"
+    ```
+6. **Deploy your code**:
+    ```bash
+    git push heroku main
+    ```
+7. Run database migrations:
+    ```bash
+    heroku run npm run db:migrate -- "MIGRATION_NAME"
+    ```
+8. Open the application:
+    ```bash
+    heroku open
+    ```
 
 ### Running the tests
 
