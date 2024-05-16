@@ -5,7 +5,6 @@ import LeafletMap from "@/components/LeafletMap";
 import L from "leaflet";
 import "jest-canvas-mock";
 
-// Mocking the Leaflet library
 jest.mock("leaflet", () => {
   return {
     marker: jest.fn(() => ({
@@ -85,13 +84,12 @@ describe("LeafletMap Component", () => {
   });
 
   it("adds GeoJSON data to the map", async () => {
-    const { getByText } = render(
+    render(
       <LeafletMap geojsonData={geojsonData as GeoJsonObject} />
     );
 
     await waitFor(() => {
       expect(L.geoJSON).toHaveBeenCalledWith(geojsonData, expect.any(Object));
-    //   expect(L.geoJSON().addTo).toHaveBeenCalled();
     });
   });
 

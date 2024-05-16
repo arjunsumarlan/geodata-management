@@ -17,7 +17,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, closeModal, content }) => {
         </button>
         <div className="mt-2">
           <h2 className="text-xl font-bold mb-4">GeoJSON Data</h2>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 mb-3 rounded" onClick={handleChangeDataDisplay}>
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white text-xs py-1 px-2 mb-3 rounded"
+            onClick={handleChangeDataDisplay}
+          >
             {showMap ? "Show JSON" : "Show Map"}
           </button>
           {showMap ? (

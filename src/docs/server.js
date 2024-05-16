@@ -10,10 +10,8 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const server = express();
 
-  // Serve Swagger docs at /api-docs
   server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-  // Handle all other requests with Next.js
   server.all('*', (req, res) => {
     return handle(req, res);
   });

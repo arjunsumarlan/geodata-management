@@ -96,12 +96,12 @@ describe('GeoJSON API', () => {
   });
 
   it('responds 400 for invalid GeoJSON input', async () => {
-    (authenticate as jest.Mock).mockReturnValue({ email: 'user@example.com', userId: '1', role: 'user' });
+    (authenticate as jest.Mock).mockReturnValue({ email: 'user@gmail.com', userId: '1', role: 'user' });
 
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body.geojson = 'invalid-geojson';
-    req.body.email = 'user@example.com';
+    req.body.email = 'user@gmail.com';
     
     (geojsonSchema.parse as jest.Mock).mockReturnValue(req.body);
     (hint as jest.Mock).mockReturnValue([{
@@ -126,11 +126,11 @@ describe('GeoJSON API', () => {
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body = {
-      email: 'other.user@example.com',
+      email: 'other.user@gmail.com',
       geojson: {},
     };
 
-    (authenticate as jest.Mock).mockReturnValue({ email: 'user@example.com', role: 'user' });
+    (authenticate as jest.Mock).mockReturnValue({ email: 'user@gmail.com', role: 'user' });
     (geojsonSchema.parse as jest.Mock).mockReturnValue(req.body);
     (hint as jest.Mock).mockReturnValue([]);
 
@@ -144,11 +144,11 @@ describe('GeoJSON API', () => {
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body = {
-      email: 'notfound@example.com',
+      email: 'notfound@gmail.com',
       geojson: {},
     };
 
-    (authenticate as jest.Mock).mockReturnValue({ email: 'admin@example.com', role: 'admin' });
+    (authenticate as jest.Mock).mockReturnValue({ email: 'admin@gmail.com', role: 'admin' });
     (geojsonSchema.parse as jest.Mock).mockReturnValue(req.body);
     (hint as jest.Mock).mockReturnValue([]);
     (prisma.user.findUnique as jest.Mock).mockReturnValueOnce(null);
@@ -163,19 +163,19 @@ describe('GeoJSON API', () => {
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body = {
-      email: 'user@example.com',
+      email: 'user@gmail.com',
       geojson: {},
     };
 
     const mockUser = {
       id: 1,
-      email: 'user@example.com',
+      email: 'user@gmail.com',
       geojson: {},
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    (authenticate as jest.Mock).mockReturnValue({ email: 'admin@example.com', role: 'admin' });
+    (authenticate as jest.Mock).mockReturnValue({ email: 'admin@gmail.com', role: 'admin' });
     (geojsonSchema.parse as jest.Mock).mockReturnValue(req.body);
     (hint as jest.Mock).mockReturnValue([]);
     (prisma.user.findUnique as jest.Mock).mockReturnValueOnce(mockUser);
@@ -197,7 +197,7 @@ describe('GeoJSON API', () => {
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body = {
-      email: 'user@example.com',
+      email: 'user@gmail.com',
       geojson: {},
     };
 
@@ -219,12 +219,12 @@ describe('GeoJSON API', () => {
     const { req, res } = createNextRequestMock();
     req.headers.authorization = 'Bearer valid-token';
     req.body = {
-      email: 'user@example.com',
+      email: 'user@gmail.com',
       geojson: {},
     };
 
     (geojsonSchema.parse as jest.Mock).mockReturnValue(req.body);
-    (authenticate as jest.Mock).mockReturnValue({ email: 'user@example.com', role: 'user' });
+    (authenticate as jest.Mock).mockReturnValue({ email: 'user@gmail.com', role: 'user' });
     (hint as jest.Mock).mockReturnValue([]);
     (prisma.user.findUnique as jest.Mock).mockRejectedValue(new Error('Database error') as never);
 

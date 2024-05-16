@@ -1,16 +1,14 @@
 import React from "react";
-import { act, fireEvent, getByText, render, waitFor } from "@testing-library/react";
+import { fireEvent, render, waitFor } from "@testing-library/react";
 import { useRouter } from "next/router";
 import GeoDataMngPage from "@/pages/index";
 import * as AuthContextModule from "@/context/auth-context";
 import { User } from "@prisma/client";
 
-// Function to create a mock Response object
 const createMockResponse = (body: any, init: ResponseInit = {}) => {
   return new Response(JSON.stringify(body), init);
 };
 
-// Mock fetch globally
 global.fetch = jest.fn((input: RequestInfo, init?: RequestInit) =>
   Promise.resolve(
     createMockResponse(
@@ -24,32 +22,11 @@ global.fetch = jest.fn((input: RequestInfo, init?: RequestInit) =>
   )
 ) as jest.Mock;
 
-// Mocking Next.js useRouter hook directly
 jest.mock("next/router", () => ({
   useRouter: jest.fn(() => ({
     route: "/login",
     pathname: "/login",
-    query: {},
-    asPath: "/login",
     push: jest.fn(() => Promise.resolve(true)),
-    replace: jest.fn(),
-    reload: jest.fn(),
-    back: jest.fn(),
-    prefetch: jest.fn(),
-    beforePopState: jest.fn(),
-    events: {
-      on: jest.fn(),
-      off: jest.fn(),
-      emit: jest.fn(),
-    },
-    isFallback: false,
-    basePath: "",
-    locale: "en-US",
-    locales: ["en-US"],
-    defaultLocale: "en-US",
-    isReady: true,
-    isPreview: false,
-    isLocaleDomain: false,
   })),
 }));
 
@@ -100,9 +77,9 @@ describe("GeoData Management Page", () => {
               users: [
                 {
                   id: "1",
-                  name: "John Doe",
-                  email: "john@example.com",
-                  role: "User",
+                  name: "User Test",
+                  email: "user.test@gmail.com",
+                  role: "user",
                   geojson: "{}",
                 },
               ],
@@ -122,7 +99,7 @@ describe("GeoData Management Page", () => {
         <GeoDataMngPage />
       </AuthContextModule.AuthProvider>
     );
-    const userData = await findByText("John Doe");
+    const userData = await findByText("User Test");
     expect(userData).toBeInTheDocument();
   });
 
@@ -411,9 +388,9 @@ describe("GeoData Management Page", () => {
               users: [
                 {
                   id: "1",
-                  name: "John Doe",
-                  email: "john@example.com",
-                  role: "User",
+                  name: "User Test",
+                  email: "user.test@gmail.com",
+                  role: "user",
                   geojson: "{}",
                 },
               ],
@@ -433,7 +410,6 @@ describe("GeoData Management Page", () => {
       const showDataButton = getByRole("button", { name: "Show Data" });
       fireEvent.click(showDataButton);
 
-      // If there's supposed to be a modal opening, you can check for that as well
       expect(getByText("GeoJSON Data")).toBeInTheDocument();
     });
 
@@ -464,9 +440,9 @@ describe("GeoData Management Page", () => {
               users: [
                 {
                   id: "1",
-                  name: "John Doe",
-                  email: "john@example.com",
-                  role: "User",
+                  name: "User Test",
+                  email: "user.test@gmail.com",
+                  role: "user",
                   geojson: "{}",
                 },
               ],
@@ -482,7 +458,7 @@ describe("GeoData Management Page", () => {
       </AuthContextModule.AuthProvider>
     );
     fireEvent.change(getByLabelText("Email:"), {
-      target: { value: "test@example.com" },
+      target: { value: "test@gmail.com" },
     });
 
     // Set the files property of the input element
@@ -550,7 +526,7 @@ describe("GeoData Management Page", () => {
     );
 
     fireEvent.change(getByLabelText("Email:"), {
-      target: { value: "test@example.com" },
+      target: { value: "test@gmail.com" },
     });
 
     // Set the files property of the input element
@@ -597,7 +573,7 @@ describe("GeoData Management Page", () => {
     );
 
     fireEvent.change(getByLabelText("Email:"), {
-      target: { value: "test@example.com" },
+      target: { value: "test@gmail.com" },
     });
 
     // Set the files property of the input element
@@ -636,9 +612,9 @@ describe("GeoData Management Page", () => {
               users: [
                 {
                   id: "1",
-                  name: "John Doe",
-                  email: "john@example.com",
-                  role: "User",
+                  name: "User Test",
+                  email: "user.test@gmail.com",
+                  role: "user",
                   geojson: "{}",
                 },
               ],
@@ -655,7 +631,7 @@ describe("GeoData Management Page", () => {
     );
 
     fireEvent.change(getByLabelText("Email:"), {
-      target: { value: "test@example.com" },
+      target: { value: "test@gmail.com" },
     });
 
     // Set the files property of the input element

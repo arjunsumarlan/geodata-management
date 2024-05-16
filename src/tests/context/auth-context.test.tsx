@@ -3,7 +3,6 @@ import {
   render,
   act,
   fireEvent,
-  getByRole,
   waitFor,
 } from "@testing-library/react";
 import { AuthProvider, useAuth } from "@/context/auth-context";

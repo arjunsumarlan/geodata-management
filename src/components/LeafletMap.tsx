@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import {
-  GeoJsonObject,
-} from "geojson";
+import { GeoJsonObject } from "geojson";
 import L from "leaflet";
 
 const myIcon = L.icon({
   iconUrl: "../assets/map-marker.webp",
-  iconSize: [38, 55], 
-  iconAnchor: [22, 94], 
-  popupAnchor: [-3, -76], 
+  iconSize: [38, 55],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76],
 });
 
 const MapContent: React.FC<MapContentProps> = ({ geojsonData }) => {
@@ -32,7 +30,6 @@ const MapContent: React.FC<MapContentProps> = ({ geojsonData }) => {
       },
     }).addTo(map);
 
-    // Calculate bounds based on the added GeoJSON layer
     const bounds = geoJsonLayer.getBounds();
     if (bounds.isValid()) {
       map.flyToBounds(bounds, { padding: [50, 50] });

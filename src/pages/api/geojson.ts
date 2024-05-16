@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { hint } from "@mapbox/geojsonhint";
-import prisma from '@/utils/prisma';
+import prisma from "@/utils/prisma";
 import { authenticate } from "../../utils/auth";
 import { geojsonSchema } from "@/utils/schemas";
 import { z } from "zod";
@@ -55,21 +55,17 @@ export default async function handler(
     });
 
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "Unauthorized - Invalid Token" });
+      return res.status(401).json({ message: "Unauthorized - Invalid Token" });
     }
 
     const { email, geojson } = geojsonSchema.parse(req.body);
     const errors = hint(geojson);
     if (errors.length > 0) {
-      let errorMessage = '';
+      let errorMessage = "";
       for (const error of errors) {
-        errorMessage += error.message + '; ';
+        errorMessage += error.message + "; ";
       }
-      return res
-        .status(400)
-        .json({ message: errorMessage });
+      return res.status(400).json({ message: errorMessage });
     }
 
     if (email !== user.email && user.role !== "admin") {
@@ -107,11 +103,9 @@ export default async function handler(
   } catch (error: any) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({
-        message: parseErrors(error.flatten())
+        message: parseErrors(error.flatten()),
       });
     }
-    return res
-      .status(500)
-      .json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 }

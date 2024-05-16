@@ -52,9 +52,9 @@ describe("Login API", () => {
 
     const mockUser: User = {
       id: 1,
-      name: "John Doe",
-      email: "john.doe@example.com",
-      password: "hashedPassword",
+      name: "User Test",
+      email: "user.test@gmail.com",
+      password: "testpassword",
       role: "user",
       geojson: "",
       createdAt: new Date(),
@@ -93,10 +93,10 @@ describe("Login API", () => {
     expect(res._getStatusCode()).toBe(401);
   });
 
-  it("responds 400 if email was not found", async () => {
+  it("responds 400 if email was not well formatted", async () => {
     const { req, res } = createNextRequestMock();
     req.body = {
-      email: "user.test",
+      email: "user.test@gmai",
       password: "test",
     };
 

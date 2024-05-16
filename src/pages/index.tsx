@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   const router = useRouter();
   const [geoJsonData, setGeoJsonData] = useState<GeoJsonObject | null>(null);
   const [users, setUsers] = useState<User[]>([]);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [selectedGeoJson, setSelectedGeoJson] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [total, setTotal] = useState<number>(0);
@@ -55,9 +55,7 @@ const Home: React.FC = () => {
     }
   }, [auth, auth.isAuthenticated, router]);
 
-  const handleGeoJsonData = async (
-    data: GeoJsonObject | null
-  ) => {
+  const handleGeoJsonData = async (data: GeoJsonObject | null) => {
     setGeoJsonData(data);
     if (data) {
       await fetchUserDatas();
@@ -97,7 +95,9 @@ const Home: React.FC = () => {
           >
             Previous
           </button>
-          <span className="text-xs">Page {page} of {totalPages} - Total Users: {total}</span>
+          <span className="text-xs">
+            Page {page} of {totalPages} - Total Users: {total}
+          </span>
           <button
             className="button-page text-sm"
             onClick={handleNext}
@@ -129,28 +129,27 @@ const Home: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {users
-                  .map((user, id) => (
-                    <tr
-                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                      key={id}
-                    >
-                      <td className="py-4 px-6">{user.name}</td>
-                      <td className="py-4 px-6">{user.email}</td>
-                      <td className="py-4 px-6">{user.role}</td>
-                      <td className="py-4 px-6">
-                        <button
-                          className="text-blue-500 hover:text-blue-800"
-                          onClick={() => handleShowGeoJson(user.geojson)}
-                        >
-                          Show Data
-                        </button>
-                      </td>
-                      <td className="py-4 px-6">
-                        {new Date(user.updatedAt).toString()}
-                      </td>
-                    </tr>
-                  ))}
+                {users.map((user, id) => (
+                  <tr
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                    key={id}
+                  >
+                    <td className="py-4 px-6">{user.name}</td>
+                    <td className="py-4 px-6">{user.email}</td>
+                    <td className="py-4 px-6">{user.role}</td>
+                    <td className="py-4 px-6">
+                      <button
+                        className="text-blue-500 hover:text-blue-800"
+                        onClick={() => handleShowGeoJson(user.geojson)}
+                      >
+                        Show Data
+                      </button>
+                    </td>
+                    <td className="py-4 px-6">
+                      {new Date(user.updatedAt).toString()}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

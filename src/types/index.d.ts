@@ -5,6 +5,8 @@ interface RequestBody {
   role: "user" | "admin";
 }
 
+type UserRole = "user" | "admin";
+
 type UserPayload = JwtPayload & { userId: string; role: string; email: string };
 
 type LoginResponse = {

@@ -31,7 +31,7 @@ export default async function handler(
   const page = parseInt(req.query.page as string) || 1;
   const limit = parseInt(req.query.limit as string) || 10;
   const offset = (page - 1) * limit;
-  
+
   try {
     if (req.method !== "GET") {
       // Only GET method is accepted
@@ -57,8 +57,8 @@ export default async function handler(
       const users = await prisma.user.findMany({
         orderBy: [
           {
-            updatedAt: 'desc',
-          }
+            updatedAt: "desc",
+          },
         ],
         skip: offset,
         take: limit,

@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from '@/utils/prisma';
+import prisma from "@/utils/prisma";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { loginSchema } from '@/utils/schemas';
-import { z } from 'zod';
+import { loginSchema } from "@/utils/schemas";
+import { z } from "zod";
 import { parseErrors } from "@/utils";
 
 /**
@@ -38,18 +38,14 @@ export default async function handler(
 ) {
   try {
     if (req.method !== "POST") {
-      return res
-        .status(405)
-        .json({ message: "Method not allowed" });
+      return res.status(405).json({ message: "Method not allowed" });
     }
 
     const { email, password } = loginSchema.parse(req.body);
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res
-        .status(401)
-        .json({ message: "Authentication failed" });
+      return res.status(401).json({ message: "Authentication failed" });
     }
 
     const token = jwt.sign(
@@ -58,21 +54,17 @@ export default async function handler(
       { expiresIn: "1h" }
     );
 
-    res
-      .status(200)
-      .json({
-        token,
-        userId: user.id,
-        message: "Logged in successfully",
-      });
+    res.status(200).json({
+      token,
+      userId: user.id,
+      message: "Logged in successfully",
+    });
   } catch (error: any) {
     if (error instanceof z.ZodError) {
       return res.status(400).json({
-        message: parseErrors(error.flatten())
+        message: parseErrors(error.flatten()),
       });
     }
-    return res
-      .status(500)
-      .json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal server error" });
   }
 }

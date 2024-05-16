@@ -4,13 +4,13 @@ import { useAuth } from "@/context/auth-context";
 import Link from "next/link";
 
 const RegisterPage: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("user");
-  const [message, setMessage] = useState<string>("");
-  const router = useRouter();
   const { auth } = useAuth();
+  const router = useRouter();
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [role, setRole] = useState<UserRole>("user");
+  const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -88,7 +88,7 @@ const RegisterPage: React.FC = () => {
           <select
             id="role"
             value={role}
-            onChange={(e) => setRole(e.target.value)}
+            onChange={(e) => setRole(e.target.value as UserRole)}
             className="rounded-lg border-0 bg-purple-50 lg:w-56 px-2 py-2 ml-12 text-sm font-semibold text-purple-700"
             required
           >

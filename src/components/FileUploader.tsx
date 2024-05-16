@@ -53,12 +53,12 @@ const FileUploader: React.FC<FileUploaderProps> = ({ onUpload }) => {
         if (response.status === 200) {
           const data = JSON.parse(text);
           onUpload(data as GeoJsonObject);
-          setMessage('');
-          setEmail('');
+          setMessage("");
+          setEmail("");
           setFile(null);
           alert(result.message);
           if (fileInputRef.current) {
-            fileInputRef.current.value = '';
+            fileInputRef.current.value = "";
           }
         } else {
           setMessage(result.message);
@@ -87,14 +87,20 @@ const FileUploader: React.FC<FileUploaderProps> = ({ onUpload }) => {
         <label htmlFor="geojson">GeoJSON:</label>
         <input
           type="file"
-          ref={fileInputRef} 
+          ref={fileInputRef}
           id="geojson"
           onChange={handleFileChange}
           accept=".json, .geojson"
           className="file:rounded-lg file:border-0 file:bg-purple-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-purple-700"
         />
-        <p className="text-xs">You can download a template to help format your GeoJSON data correctly. {" "}
-          <a className="text-red-800 hover:text-red-300" href="/templates/geojson-template.json" download="GeoJSON-Template.json">
+        <p className="text-xs">
+          You can download a template to help format your GeoJSON data
+          correctly.{" "}
+          <a
+            className="text-red-800 hover:text-red-300"
+            href="/templates/geojson-template.json"
+            download="GeoJSON-Template.json"
+          >
             Download GeoJSON Template
           </a>
         </p>

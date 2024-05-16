@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { authenticate } from '@/utils/auth'; // Adjust the path based on your project structure
+import { authenticate } from '@/utils/auth';
 
 jest.mock('jsonwebtoken');
 
@@ -11,7 +11,7 @@ describe('authenticate', () => {
   });
 
   it('returns decoded token when the token is valid', () => {
-    const mockDecoded = { userId: '123', email: 'test@example.com', role: 'user' };
+    const mockDecoded = { userId: '123', email: 'test@gmail.com', role: 'user' };
     (jwt.verify as jest.MockedFunction<typeof jwt.verify>).mockReturnValue(mockDecoded as any);
 
     process.env.JWT_SECRET = 'test-secret';

@@ -42,9 +42,9 @@ describe('Register API', () => {
 
     const mockUser: User = {
       id: 1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      password: 'hashedPassword',
+      name: 'User Test',
+      email: 'user.test@gmail.com',
+      password: 'test123',
       role: 'user',
       geojson: '',
       createdAt: new Date(),
@@ -72,7 +72,7 @@ describe('Register API', () => {
     const mockUser: User = {
       id: 1,
       name: 'User Test',
-      email: 'user.test@example.com',
+      email: 'user.test@gmail.com',
       password: 'test123',
       role: 'user',
       geojson: '',
@@ -81,8 +81,6 @@ describe('Register API', () => {
     };
 
     (prisma.user.findUnique as jest.Mock).mockReturnValue(mockUser);
-
-    (prisma.user.create as jest.Mock).mockResolvedValueOnce(mockUser as never);
 
     await handler(req, res);
 
