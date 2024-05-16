@@ -26,19 +26,19 @@ jobs:
       run: npm install
     - name: Run tests
       run: npm test
-    - name: Add SSH key
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - name: Set Git SSH config
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
-        git config --global url."git@heroku.com:".insteadOf "https://git.heroku.com/"
-    - name: Authenticate Heroku CLI
-      run: |
-        heroku auth:token
-        heroku auth:whoami
+    # - name: Add SSH key
+    #   uses: webfactory/ssh-agent@v0.5.3
+    #   with:
+    #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    # - name: Set Git SSH config
+    #   run: |
+    #     mkdir -p ~/.ssh
+    #     ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
+    #     git config --global url."git@heroku.com:".insteadOf "https://git.heroku.com/"
+    # - name: Authenticate Heroku CLI
+    #   run: |
+    #     heroku auth:token
+    #     heroku auth:whoami
     - name: Deploy to Heroku
       run: |
         heroku git:remote -a ${{ env.HEROKU_APP_NAME }}
