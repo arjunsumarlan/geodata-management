@@ -38,6 +38,12 @@ export default async function handler(
     }
 
     const { name, email, password, role } = registerSchema.parse(req.body);
+    const existUser = await prisma.user.findUnique({ where: { email } });
+    if (existUser) {
+      return res
+        .status(400)
+        .json({ message: "User already exists" });
+    }
 
     const today = new Date();
     const hashedPassword = await bcrypt.hash(password, 10);

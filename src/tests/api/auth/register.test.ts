@@ -8,6 +8,7 @@ import { jest } from '@jest/globals';
 jest.mock('@/utils/prisma', () => ({
   user: {
     create: jest.fn(),
+    findUnique: jest.fn(),
   },
 }));
 jest.mock('@/utils/auth');
@@ -50,11 +51,42 @@ describe('Register API', () => {
       updatedAt: new Date(),
     };
 
+    (prisma.user.findUnique as jest.Mock).mockReturnValue(null);
+
     (prisma.user.create as jest.Mock).mockResolvedValueOnce(mockUser as never);
 
     await handler(req, res);
 
     expect(res._getStatusCode()).toBe(201);
+  });
+
+  it('responds 400 when user already exists', async () => {
+    const { req, res } = createNextRequestMock();
+    req.body = { 
+      name: 'User Test', 
+      email: 'user.test@gmail.com', 
+      password: 'test123', 
+      role: 'user' 
+    };
+
+    const mockUser: User = {
+      id: 1,
+      name: 'User Test',
+      email: 'user.test@example.com',
+      password: 'test123',
+      role: 'user',
+      geojson: '',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    (prisma.user.findUnique as jest.Mock).mockReturnValue(mockUser);
+
+    (prisma.user.create as jest.Mock).mockResolvedValueOnce(mockUser as never);
+
+    await handler(req, res);
+
+    expect(res._getStatusCode()).toBe(400);
   });
 
   it('responds 405 if method was not POST', async () => {
@@ -84,6 +116,7 @@ describe('Register API', () => {
     const { req, res } = createNextRequestMock();
     req.body = { name: 'User Test', email: 'user.test@gmail.com', password: 'test123', role: 'user' };
 
+    (prisma.user.findUnique as jest.Mock).mockRejectedValueOnce(new Error('Database error') as never);
     (prisma.user.create as jest.Mock).mockRejectedValueOnce(new Error('Database error') as never);
 
     await handler(req, res);
