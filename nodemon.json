@@ -1,0 +1,14 @@
+{
+    "watch": [
+      "server.js",
+      "swagger.js",
+      "components.yaml",
+      "pages/api"
+    ],
+    "ext": "js,json,yaml",
+    "ignore": [
+      "node_modules"
+    ],
+    "exec": "node src/docs/server.js"
+  }
+  

@@ -1,0 +1,166 @@
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  payloads:
+    LoginPayload:
+      type: object
+      required: true
+      properties:
+        email:
+          type: string
+          example: "user.test1@gmail.com"
+        password:
+          type: string
+          example: "testpassword"
+    RegisterPayload:
+      type: object
+      required: true
+      properties:
+        name:
+          type: string
+          example: "User Test 1"
+        email:
+          type: string
+          example: "user.test1@gmail.com"
+        password:
+          type: string
+          example: "testpassword"
+        role:
+          type: string
+          enum:
+            - user
+            - admin
+          example: "user"
+    GeoUploadPayload:
+      type: object
+      required: true
+      properties:
+        email:
+          type: string
+          example: "user.test1@gmail.com"
+        geojson:
+          type: string
+          example: '{"type":"FeatureCollection","features":[{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[125.6,10.1]}}]}'
+  responses:
+    UsersResponse:
+      description: List of users
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: "success"
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    LoginResponse:
+      description: Successful login
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              token: 
+                type: string
+              userId:
+                type: number
+              message:
+                type: string
+    RegisterResponse:
+      description: Successful registration
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              user:
+                $ref: '#/components/schemas/User'
+    GeoUploadResponse:
+      description: Successful upload geojson
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+              message:
+                type: string
+              user:
+                $ref: '#/components/schemas/User'
+    AuthFailedResponse:
+      description: Authentication failed response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequestResponse:
+      description: Bad request response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    MethodNotAllowedResponse:
+      description: Method not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    ServerErrorResponse:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - name
+        - email
+        - password
+        - role
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum:
+            - user
+            - admin
+        geojson:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        error:
+          type: string

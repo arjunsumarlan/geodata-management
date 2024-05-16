@@ -1,0 +1,29 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "AEON Mall BSD City",
+        "amenity": "Shopping Mall",
+        "description": "One of the largest shopping centers in BSD City."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.664739, -6.283179]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Green Office Park BSD",
+        "amenity": "Business Park",
+        "description": "A green and sustainable office park in BSD City."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.668976, -6.299846]
+      }
+    }
+  ]
+}
