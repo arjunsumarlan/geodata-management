@@ -12,6 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetches all history for all branches and tags
+    - name: Install Heroku CLI
+      run: |
+        curl https://cli-assets.heroku.com/install.sh | sh
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -22,7 +27,8 @@ jobs:
       run: npm test
     - name: Deploy to Heroku
       run: |
+        heroku git:remote -a ${{ env.HEROKU_APP_NAME }}
         git push heroku main
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        HEROKU_APP_NAME: "geodata-management"
+        HEROKU_APP_NAME: geodata-management
