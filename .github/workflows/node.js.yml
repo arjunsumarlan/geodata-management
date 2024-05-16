@@ -30,10 +30,14 @@ jobs:
     - name: Run tests
       run: npm test
 
-    - name: Setup SSH for Heroku
+    - name: Add SSH key
       uses: webfactory/ssh-agent@v0.5.3
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    
+    - name: Check added SSH keys
+      run: |
+        ssh-add -L
 
     - name: Set Git SSH config
       run: |
